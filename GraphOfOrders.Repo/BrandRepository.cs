@@ -16,15 +16,5 @@ namespace GraphOfOrders.Repo
         {
             return _context.Brands.Where(b => b.ProductId == productId).ToList();
         }
-
-        public IEnumerable<Product> GetProductsByCategory(int categoryId)
-        {
-            return _context.Products.Where(p => p.CategoryId == categoryId).ToList();
-        }
-        
-        public IEnumerable<Category> GetCategories()
-        {
-            return _context.Categories.ToList();
-        }
     }
 }

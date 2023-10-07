@@ -20,17 +20,5 @@ namespace GraphOfOrders.Api
         {
             return _brandService.GetBrandsByProduct(productId);
         }
-
-        [HttpGet("products-by-category")]
-        public IEnumerable<ProductDTO> GetProductsByCategory(int categoryId)
-        {
-            return _brandService.GetProductsByCategory(categoryId);
-        }
-
-        [HttpGet("categories")]
-        public IEnumerable<CategoryDTO> GetAllCategories()
-        {
-            return _brandService.GetAllCategories();
-        }
     }
 }

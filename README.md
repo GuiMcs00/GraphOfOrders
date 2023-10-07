@@ -62,3 +62,7 @@ dotnet ef migrations add InitialCreate -p GraphOfOrders.Repo -s GraphOfOrders.Ap
 ### running migrations
 dotnet ef database update -p GraphOfOrders.Repo -s GraphOfOrders.Api -c OrdersContext --verbose
 dotnet ef migrations remove -p GraphOfOrders.Repo -s GraphOfOrders.Api -c OrdersContext --verbose
+
+## Implementing new features
+### Add new packages to projects
+dotnet add GraphOfOrders.Service/GraphOfOrders.Service.csproj package Microsoft.Extensions.DependencyInjection

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace GraphOfOrders.Lib.DI
 {
-    public interface IBrandService
+    public interface IProductService
     {
-        IEnumerable<BrandDTO> GetBrandsByProduct(int productId);
+        IEnumerable<ProductDTO> GetProductsByCategory(int categoryId);
     }
 }

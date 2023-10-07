@@ -22,24 +22,5 @@ namespace GraphOfOrders.Service
                 ProductId = b.ProductId
             });
         }
-        public IEnumerable<CategoryDTO> GetAllCategories()
-        {
-            var categories = _brandRepository.GetCategories();
-            return categories.Select(c => new CategoryDTO
-            {
-                CategoryId = c.CategoryId,
-                CategoryName = c.CategoryName
-            });
-        }
-        public IEnumerable<ProductDTO> GetProductsByCategory(int categoryId)
-        {
-            var products = _brandRepository.GetProductsByCategory(categoryId);
-            return products.Select(p => new ProductDTO
-            {
-                CategoryId = p.CategoryId,
-                ProductId = p.ProductId,
-                ProductName = p.ProductName
-            });
-        }
     }
 }
