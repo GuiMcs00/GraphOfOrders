@@ -1,9 +1,9 @@
-using GraphOfOrders.Interfaces.Repo;
+using GraphOfOrders.Lib.DI;
 using GraphOfOrders.Lib.DTOs;
 
 namespace GraphOfOrders.Service
 {
-    public class BrandService
+    public class BrandService : IBrandService
     {
         private readonly IBrandRepository _brandRepository;
 

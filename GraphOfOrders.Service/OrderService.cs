@@ -1,10 +1,9 @@
-using GraphOfOrders.Interfaces.Repo;
-using GraphOfOrders.Lib;
+using GraphOfOrders.Lib.DI;
 using GraphOfOrders.Lib.DTOs;
 
 namespace GraphOfOrders.Service
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
 

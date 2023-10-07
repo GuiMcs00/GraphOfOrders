@@ -1,5 +1,5 @@
 using GraphOfOrders.Lib;
-using GraphOfOrders.Interfaces.Repo;
+using GraphOfOrders.Lib.DI;
 
 namespace GraphOfOrders.Repo
 {

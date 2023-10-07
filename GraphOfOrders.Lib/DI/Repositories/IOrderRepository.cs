@@ -1,6 +1,6 @@
-using GraphOfOrders.Lib;
+using System.Collections.Generic;
 
-namespace GraphOfOrders.Interfaces.Repo
+namespace GraphOfOrders.Lib.DI
 {
     public interface IOrderRepository
     {

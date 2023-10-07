@@ -1,4 +1,4 @@
-using GraphOfOrders.Service;
+using GraphOfOrders.Lib.DI;
 using GraphOfOrders.Lib.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +8,9 @@ namespace GraphOfOrders.Api
     [Route("[controller]")]
     public class OrderController : ControllerBase
     {
-        private readonly OrderService _orderService;
+        private readonly IOrderService _orderService;
 
-        public OrderController(OrderService orderService)
+        public OrderController(IOrderService orderService)
         {
             _orderService = orderService;
         }
