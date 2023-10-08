@@ -57,10 +57,11 @@ The solution is structured into multiple projects, each with distinct responsibi
 dotnet tool install --global dotnet-ef
 
 ### Creating migrations
-dotnet ef migrations add InitialCreate -p GraphOfOrders.Repo -s GraphOfOrders.Api -c OrdersContext --verbose
+dotnet ef migrations add CustomerAdded --project GraphOfOrders.Repo -s GraphOfOrders.Api --context OrdersContext --verbose
 
 ### running migrations
-dotnet ef database update -p GraphOfOrders.Repo -s GraphOfOrders.Api -c OrdersContext --verbose
+dotnet ef database update MigrationName -p GraphOfOrders.Repo -s GraphOfOrders.Api -c OrdersContext --verbose
+#### To remove remember to update the database with the last migration
 dotnet ef migrations remove -p GraphOfOrders.Repo -s GraphOfOrders.Api -c OrdersContext --verbose
 
 ## Implementing new features

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using GraphOfOrders.Repo;
-using GraphOfOrders.Lib;
+using GraphOfOrders.Lib.Entities;
 
 public class CategoryRepositoryShould
 {

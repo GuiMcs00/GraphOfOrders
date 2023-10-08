@@ -1,4 +1,4 @@
-using GraphOfOrders.Lib;
+using GraphOfOrders.Lib.Entities;
 using GraphOfOrders.Lib.DI;
 
 namespace GraphOfOrders.Repo
