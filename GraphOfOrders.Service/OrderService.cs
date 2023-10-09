@@ -19,7 +19,8 @@ namespace GraphOfOrders.Service
             {
                 OrderId = o.OrderId,
                 OrderDate = o.OrderDate,
-                BrandId = o.BrandId
+                BrandId = o.BrandId,
+                CustomerId = o.CustomerId
             });
         }
     }

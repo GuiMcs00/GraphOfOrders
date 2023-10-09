@@ -1,7 +1,7 @@
 using Moq;
 using GraphOfOrders.Service;
 using GraphOfOrders.Lib.DI;
-using GraphOfOrders.Lib;
+using GraphOfOrders.Lib.Entities;
 
 public class OrderServiceShould
 {
@@ -20,7 +20,7 @@ public class OrderServiceShould
         // Arrange
         var orders = new List<Order>
         {
-            new Order { OrderId = 1, BrandId = 1, OrderDate = DateTime.Now }
+            new Order { OrderId = 1, BrandId = 1, CustomerId = 1, OrderDate = DateTime.Now }
         };
         _mockRepo.Setup(repo => repo.GetOrdersByBrand(1)).Returns(orders);
 

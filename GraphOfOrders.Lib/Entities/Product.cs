@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace GraphOfOrders.Lib
+namespace GraphOfOrders.Lib.Entities
 {
     public class Product
     {

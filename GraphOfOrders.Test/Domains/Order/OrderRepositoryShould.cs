@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using GraphOfOrders.Repo;
-using GraphOfOrders.Lib;
+using GraphOfOrders.Lib.Entities;
 
 public class OrderRepositoryShould
 {
@@ -21,7 +21,7 @@ public class OrderRepositoryShould
     public void GetOrdersByBrand_ReturnsOrders()
     {
         // Arrange
-        var order = new Order { OrderId = 1, BrandId = 1, OrderDate = DateTime.Now };
+        var order = new Order { OrderId = 1, BrandId = 1, CustomerId = 1, OrderDate = DateTime.Now };
         _context.Orders.Add(order);
         _context.SaveChanges();
 

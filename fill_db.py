@@ -32,12 +32,23 @@ class Brand(Base):
     product = relationship('Product', back_populates='brands')
     orders = relationship('Order', back_populates='brand')
 
+class Customer(Base):
+    __tablename__ = 'Customers'
+    CustomerId = Column(Integer, primary_key=True)
+    Name = Column(String)
+    Email = Column(String, unique=True)
+    orders = relationship('Order', back_populates='customer')
+
+
 class Order(Base):
     __tablename__ = 'Orders'
     OrderId = Column(Integer, primary_key=True)
     BrandId = Column(Integer, ForeignKey('Brands.BrandId'))
+    CustomerId = Column(Integer, ForeignKey('Customers.CustomerId')) 
     OrderDate = Column(Date)
     brand = relationship('Brand', back_populates='orders')
+    customer = relationship('Customer', back_populates='orders') 
+
 
 # Connect to the database
 engine = create_engine('postgresql://postgres:changeme@170.83.132.66:5432/postgres')
@@ -48,6 +59,42 @@ Base.metadata.create_all(engine)
 # Create a session
 Session = sessionmaker(bind=engine)
 session = Session()
+
+# Generate customers
+first_names = [
+    'John', 'Jane', 'James', 'Jennifer', 'Jack',
+    'Jill', 'Jerry', 'Jessica', 'Jake', 'Julia',
+    'Valery', 'Poly', 'Sky', 'Gaby', 'Miguel', 'Joao'
+]
+last_names = [
+    'Doe', 'Smith', 'Johnson', 'Williams', 'Jones',
+    'Brown', 'Davis', 'Miller', 'Wilson', 'Moore',
+    'Sun', 'Moon', 'Pereira', 'Silva', 'Cunha', 'Amorim'
+]
+email_providers = [
+    'outlook.com', 'gmail.com', 'bol.com.br', 'hotmail.com',
+    'mycompany.com.br', 'ilia.com.br', 'aws.com', 'dw.co'
+]
+customer_names = set()
+while len(customer_names) < 125:
+    first_name = random.choice(first_names)
+    last_name = random.choice(last_names)
+    email_provider = random.choice(email_providers)
+    full_name = f'{first_name} {last_name}'
+    email = f'{first_name.lower()}.{last_name.lower()}@{email_provider}'
+    customer_names.add((full_name, email))
+
+customer_names = list(customer_names)
+
+# Add customers
+customers = []
+for name, email in customer_names:
+    customer = Customer(Name=name, Email=email)
+    session.add(customer)
+    customers.append(customer)
+    print("customer added")
+
+session.commit()
 
 
 # List of category names
@@ -75,19 +122,21 @@ for idx, cat_name in enumerate(category_names, start=1):
         session.add(product)
         print("prodcut added")
 
-        for b in range(1, 10):
+        for b in range(1, 5):
             brand_name = f'Brand{b}_Prod{p}_Cat{idx}'
             brand = Brand(BrandName=brand_name, product=product)
             session.add(brand)
             print("brand added")
 
-            for o in range(1, 30):
+            for o in range(1, 15):
                 random_month = random.randint(1, 4)
                 random_day = random.randint(1, 28)
                 order_date = date(2023, random_month, random_day)
-                order = Order(brand=brand, OrderDate=order_date)
+                random_customer = random.choice(customers)  # Choose a random customer
+                order = Order(brand=brand, OrderDate=order_date, customer=random_customer)  # Associate the order with the customer
                 session.add(order)
                 print("order added")
+
 
     # Commit after inserting all records related to a category
     session.commit()

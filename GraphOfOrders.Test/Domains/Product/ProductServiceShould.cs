@@ -1,7 +1,7 @@
 using Moq;
 using GraphOfOrders.Service;
 using GraphOfOrders.Lib.DI;
-using GraphOfOrders.Lib;
+using GraphOfOrders.Lib.Entities;
 
 public class ProductServiceShould
 {
