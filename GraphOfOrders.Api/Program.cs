@@ -1,7 +1,10 @@
 using GraphOfOrders.Repo.IoC;
 using GraphOfOrders.Service.IoC;
+using GraphOfOrders.Service;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 // Add services to the container.
 builder.Services.AddRepoServices(builder.Configuration);
