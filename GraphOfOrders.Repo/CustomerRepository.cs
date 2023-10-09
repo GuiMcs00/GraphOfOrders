@@ -1,5 +1,6 @@
 using GraphOfOrders.Lib.Entities;
 using GraphOfOrders.Lib.DI;
+using GraphOfOrders.Lib.Exceptions;
 
 namespace GraphOfOrders.Repo
 {
@@ -18,10 +19,27 @@ namespace GraphOfOrders.Repo
             await _context.SaveChangesAsync();
             return customerEntityEntry.Entity;
         }
-        
+
         public async Task<Customer> GetCustomerById(int id)
         {
             return await _context.Customers.FindAsync(id);
         }
+
+        public async Task<Customer> UpdateCustomer(int id, Customer updatedCustomer)
+        {
+            var existingCustomer = await _context.Customers.FindAsync(id);
+            if (existingCustomer == null)
+            {
+                return null; // or you might want to throw a not found exception
+            }
+
+            // Update the properties of the existing customer entity
+            existingCustomer.Name = updatedCustomer.Name;
+            existingCustomer.Email = updatedCustomer.Email;
+
+            await _context.SaveChangesAsync();
+            return existingCustomer;
+        }
+
     }
 }

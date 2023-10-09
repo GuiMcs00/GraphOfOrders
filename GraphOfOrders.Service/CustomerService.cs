@@ -17,7 +17,7 @@ namespace GraphOfOrders.Service
             _mapper = mapper;
         }
 
-        public async Task<CustomerDTO> CreateCustomer(CreateCustomerDTO customer)
+        public async Task<CustomerDTO> CreateCustomer(CustomerInputDTO customer)
         {
             var createdCustomer = await _customerRepository.CreateCustomer(_mapper.Map<Customer>(customer));
             return _mapper.Map<CustomerDTO>(createdCustomer);
@@ -32,5 +32,17 @@ namespace GraphOfOrders.Service
             }
             return _mapper.Map<CustomerDTO>(customerEntity);
         }
+
+        public async Task<CustomerDTO> UpdateCustomer(int id, CustomerInputDTO updatedCustomerDTO)
+        {
+            var updatedCustomer = _mapper.Map<Customer>(updatedCustomerDTO);
+            var result = await _customerRepository.UpdateCustomer(id, updatedCustomer);
+            if (result == null)
+            {
+                throw new NotFoundException($"Customer with ID {id} not found");
+            }
+            return _mapper.Map<CustomerDTO>(result);
+        }
+
     }
 }

@@ -9,6 +9,7 @@ namespace GraphOfOrders.Lib.DI
     {
         Task<Customer> CreateCustomer(Customer customer);
         Task<Customer> GetCustomerById(int id);
+        Task<Customer> UpdateCustomer(int id, Customer updatedCustomer);
     }
 
 }

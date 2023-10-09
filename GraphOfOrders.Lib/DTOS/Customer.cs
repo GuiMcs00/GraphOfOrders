@@ -7,7 +7,7 @@ namespace GraphOfOrders.Lib.DTOs
         public string Name { get; set; }
         public string Email { get; set; }
     }
-    public class CreateCustomerDTO
+    public class CustomerInputDTO
     {
         public string Name { get; set; }
         public string Email { get; set; }

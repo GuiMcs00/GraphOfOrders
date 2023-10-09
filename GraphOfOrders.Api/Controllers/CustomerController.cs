@@ -17,7 +17,7 @@ namespace GraphOfOrders.Api
         }
 
         [HttpPost]
-        public async Task<ActionResult<CustomerDTO>> CreateCustomer(CreateCustomerDTO customer)
+        public async Task<ActionResult<CustomerDTO>> CreateCustomer(CustomerInputDTO customer)
         {
             var createdCustomer = await _customerService.CreateCustomer(customer);
             return CreatedAtAction(nameof(GetCustomerById), new { id = createdCustomer.CustomerId }, createdCustomer);
@@ -41,5 +41,22 @@ namespace GraphOfOrders.Api
             }
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCustomer(int id, CustomerInputDTO updatedCustomerDTO)
+        {
+            try
+            {
+                var updatedCustomer = await _customerService.UpdateCustomer(id, updatedCustomerDTO);
+                return Ok(updatedCustomer);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Internal server error" });
+            }
+        }
     }
 }

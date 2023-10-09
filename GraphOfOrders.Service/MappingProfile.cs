@@ -10,7 +10,8 @@ namespace GraphOfOrders.Service
         {
             CreateMap<Brand, BrandDTO>().ReverseMap();
             CreateMap<Customer, CustomerDTO>().ReverseMap();
-            CreateMap<Customer, CreateCustomerDTO>().ReverseMap();
+            CreateMap<Customer, CustomerInputDTO>().ReverseMap();
+            CreateMap<Customer, CustomerInputDTO>().ReverseMap();
         }
     }
 }
