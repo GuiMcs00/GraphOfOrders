@@ -11,7 +11,7 @@ public class BrandRepositoryTests
     public BrandRepositoryTests()
     {
         var options = new DbContextOptionsBuilder<OrdersContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
+            .UseInMemoryDatabase(databaseName: "TestBrandsDatabase")
             .Options;
 
         _context = new OrdersContext(options);

@@ -15,6 +15,7 @@ namespace GraphOfOrders.Repo.IoC
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             
             return services;
         }
