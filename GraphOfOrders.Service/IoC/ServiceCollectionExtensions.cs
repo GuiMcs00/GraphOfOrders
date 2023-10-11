@@ -11,6 +11,7 @@ namespace GraphOfOrders.Service.IoC
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICustomerService, CustomerService>();
             return services;
         }
     }
