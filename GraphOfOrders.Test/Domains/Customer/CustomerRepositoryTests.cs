@@ -70,4 +70,38 @@ public class CustomerRepositoryTests : IDisposable
         Assert.Null(result);
     }
 
+    [Fact]
+    public void ShouldGetCustomers_ReturnsCustomers()
+    {
+        // Arrange
+        var customers = new List<Customer>
+        {
+            new Customer { CustomerId = 1, Email = "customer1@mail.com", Name = "Customer1" },
+            new Customer { CustomerId = 2, Email = "customer2@mail.com", Name = "Customer2" },
+            new Customer { CustomerId = 3, Email = "customer3@mail.com", Name = "Customer3" },
+            // Add more customers as needed.
+        };
+
+        foreach (var customer in customers)
+        {
+            _context.Customers.Add(customer);
+        }
+        _context.SaveChanges();
+
+        // Act
+        var result = _repo.GetAllCustomers();
+
+        // Assert
+        Assert.Equal(customers.Count, result.Count());
+        var customerList = result.ToList();
+
+        for (int i = 0; i < customers.Count; i++)
+        {
+            Assert.Equal(customers[i].CustomerId, customerList[i].CustomerId);
+            Assert.Equal(customers[i].Name, customerList[i].Name);
+            Assert.Equal(customers[i].Email, customerList[i].Email);
+        }
+    }
+
+
 }
