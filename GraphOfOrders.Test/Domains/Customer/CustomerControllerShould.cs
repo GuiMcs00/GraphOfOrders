@@ -81,5 +81,22 @@ public class CustomerControllerShould : IClassFixture<WebApplicationFactory<Prog
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
+    [Fact]
+    public async Task GetAllCustomers_ReturnsCustomers_WithCorrectPagination()
+    {
+        // Arrange
+        var itemsPerPage = 2;
+        var page = 1;
+
+        // Act
+        var response = await _client.GetAsync($"/customer?itemsPerPage={itemsPerPage}&page={page}");
+
+        // Assert
+        response.EnsureSuccessStatusCode();
+
+        var customers = await response.Content.ReadFromJsonAsync<IEnumerable<CustomerDTO>>();
+        Assert.NotNull(customers);
+        Assert.True(customers.Count() <= itemsPerPage);
+    }
 
 }

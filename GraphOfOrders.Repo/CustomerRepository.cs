@@ -1,6 +1,7 @@
 using GraphOfOrders.Lib.Entities;
 using GraphOfOrders.Lib.DI;
 using GraphOfOrders.Lib.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace GraphOfOrders.Repo
 {
@@ -24,7 +25,16 @@ namespace GraphOfOrders.Repo
         {
             return await _context.Customers.FindAsync(id);
         }
-
+        public IEnumerable<Customer> GetAllCustomers()
+        {
+            return _context.Customers.ToList();
+        }
+        public IEnumerable<Customer> GetAllCustomers(int howMany, int page)
+        {
+            var skip = (page - 1) * howMany;
+            var data = _context.Customers.Skip(skip).Take(howMany).ToList();
+            return data;
+        }
         public async Task<Customer> UpdateCustomer(int id, Customer updatedCustomer)
         {
             var existingCustomer = await _context.Customers.FindAsync(id);

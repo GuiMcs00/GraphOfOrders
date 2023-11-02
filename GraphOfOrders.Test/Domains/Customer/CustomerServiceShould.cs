@@ -89,6 +89,38 @@ public class CustomerServiceShould
         await Assert.ThrowsAsync<NotFoundException>(() => _service.UpdateCustomer(customerId, updateCustomerDto));
         _mockRepo.Verify(repo => repo.UpdateCustomer(customerId, It.IsAny<Customer>()), Times.Once);
     }
+    [Fact]
+    public void ReturnCustomersWithCorrectPaginationAndItemsPerPage()
+    {
+        // Arrange
+        var itemsPerPage = 2;
+        var page = 1;
+        var customers = new List<Customer>
+        {
+            new Customer { CustomerId = 1, Name = "Customer1", Email = "customer1@example.com" },
+            new Customer { CustomerId = 2, Name = "Customer2", Email = "customer2@example.com" },
+            new Customer { CustomerId = 3, Name = "Customer3", Email = "customer3@example.com" },
+        };
+        var pagedCustomers = customers.Skip((page - 1) * itemsPerPage).Take(itemsPerPage).ToList();
+        var customerDTOs = pagedCustomers.Select(c => new CustomerDTO
+        {
+            CustomerId = c.CustomerId,
+            Name = c.Name,
+            Email = c.Email
+        });
+
+        _mockRepo.Setup(repo => repo.GetAllCustomers(itemsPerPage, page)).Returns(pagedCustomers);
+        _mockMapper.Setup(m => m.Map<IEnumerable<CustomerDTO>>(pagedCustomers)).Returns(customerDTOs);
+
+        // Act
+        var result = _service.GetCustomers(itemsPerPage, page);
+
+        // Assert
+        Assert.Equal(customerDTOs, result);
+        Assert.Equal(itemsPerPage, result.Count());
+        _mockRepo.Verify(repo => repo.GetAllCustomers(itemsPerPage, page), Times.Once);
+        _mockMapper.Verify(m => m.Map<IEnumerable<CustomerDTO>>(pagedCustomers), Times.Once);
+    }
 
 
 }

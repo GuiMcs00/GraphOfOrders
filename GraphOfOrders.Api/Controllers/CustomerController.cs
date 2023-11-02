@@ -23,6 +23,13 @@ namespace GraphOfOrders.Api
             return CreatedAtAction(nameof(GetCustomerById), new { id = createdCustomer.CustomerId }, createdCustomer);
         }
 
+        [HttpGet]
+        public IActionResult GetAllCustomers([FromQuery] int? itemsPerPage, [FromQuery] int? page)
+        {
+            var customers = _customerService.GetCustomers(itemsPerPage ??= 20, page ??= 1);
+            return Ok(customers);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomerById(int id)
         {

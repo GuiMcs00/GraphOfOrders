@@ -1,3 +1,4 @@
+using System.Collections;
 using AutoMapper;
 using GraphOfOrders.Lib.DI;
 using GraphOfOrders.Lib.DTOs;
@@ -43,6 +44,10 @@ namespace GraphOfOrders.Service
             }
             return _mapper.Map<CustomerDTO>(result);
         }
-
+        public IEnumerable<CustomerDTO> GetCustomers(int itemsPerPage, int page){
+             var customers = _customerRepository.GetAllCustomers(itemsPerPage, page);
+            var customersDTOs = _mapper.Map<IEnumerable<CustomerDTO>>(customers);
+            return customersDTOs;
+        }
     }
 }
