@@ -103,5 +103,31 @@ public class CustomerRepositoryTests : IDisposable
         }
     }
 
+    [Fact]
+    public void ShouldReturnCustomersPaginated()
+    {
+        // Arrange
+        var customers = new List<Customer>
+        {
+            new Customer { CustomerId = 1, Name = "Customer1", Email = "customer1@example.com" },
+            new Customer { CustomerId = 2, Name = "Customer2", Email = "customer2@example.com" },
+            new Customer { CustomerId = 3, Name = "Customer3", Email = "customer3@example.com" },
+        };
+        foreach (var customer in customers)
+        {
+            _context.Customers.Add(customer);
+        }
+        _context.SaveChanges();
 
+        var itemsPerPage = 2;
+        var page = 1;
+        var expectedCustomers = customers.Take(itemsPerPage).ToList();
+
+        // Act
+        var result = _repo.GetAllCustomers(itemsPerPage, page).ToList();
+
+        // Assert
+        Assert.Equal(expectedCustomers, result);
+        Assert.Equal(itemsPerPage, result.Count);
+    }
 }

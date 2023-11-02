@@ -1,3 +1,4 @@
+using System.Collections;
 using AutoMapper;
 using GraphOfOrders.Lib.DI;
 using GraphOfOrders.Lib.DTOs;
@@ -43,6 +44,5 @@ namespace GraphOfOrders.Service
             }
             return _mapper.Map<CustomerDTO>(result);
         }
-
     }
 }
