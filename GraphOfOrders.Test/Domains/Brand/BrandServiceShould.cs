@@ -2,16 +2,19 @@ using Moq;
 using GraphOfOrders.Service;
 using GraphOfOrders.Lib.DI;
 using GraphOfOrders.Lib.Entities;
+using AutoMapper;
 
 public class BrandServiceShould
 {
     private readonly Mock<IBrandRepository> _mockRepo;
+    private readonly Mock<IMapper> _mapper;
     private readonly BrandService _service;
 
     public BrandServiceShould()
     {
         _mockRepo = new Mock<IBrandRepository>();
-        _service = new BrandService(_mockRepo.Object);
+        _mapper = new Mock<IMapper>();
+        _service = new BrandService(_mockRepo.Object, _mapper.Object);
     }
 
     [Fact]
