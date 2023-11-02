@@ -107,16 +107,22 @@ public class CustomerServiceShould
             CustomerId = c.CustomerId,
             Name = c.Name,
             Email = c.Email
-        });
+        }).ToList();
 
         _mockRepo.Setup(repo => repo.GetAllCustomers(itemsPerPage, page)).Returns(pagedCustomers);
         _mockMapper.Setup(m => m.Map<IEnumerable<CustomerDTO>>(pagedCustomers)).Returns(customerDTOs);
 
         // Act
-        var result = _service.GetCustomers(itemsPerPage, page);
+        var result = _service.GetCustomers(itemsPerPage, page).ToList();
 
         // Assert
-        Assert.Equal(customerDTOs, result);
+        for(var i =0; i < customerDTOs.Count; i++)
+        {
+            Assert.Equal(customerDTOs[i].CustomerId, result[i].CustomerId);
+            Assert.Equal(customerDTOs[i].Name, result[i].Name);
+            Assert.Equal(customerDTOs[i].Email, result[i].Email);
+
+        }
         Assert.Equal(itemsPerPage, result.Count());
         _mockRepo.Verify(repo => repo.GetAllCustomers(itemsPerPage, page), Times.Once);
         _mockMapper.Verify(m => m.Map<IEnumerable<CustomerDTO>>(pagedCustomers), Times.Once);

@@ -64,20 +64,25 @@ public class BrandServiceShould
             new Brand { BrandId = 1, BrandName = "Brand1", ProductId = 1 },
             new Brand { BrandId = 2, BrandName = "Brand2", ProductId = 1 }
         };
-        var brandDTOs = brands.Select(b => new BrandDTO
+        var expectedBrandDTOs = brands.Select(b => new BrandDTO
         {
             BrandId = b.BrandId,
             BrandName = b.BrandName,
             ProductId = b.ProductId
-        });
+        }).ToList();
         _mockRepo.Setup(repo => repo.GetBrands(2, 1)).Returns(brands);
-        _mapper.Setup(m => m.Map<IEnumerable<BrandDTO>>(brands)).Returns(brandDTOs);
+        _mapper.Setup(m => m.Map<IEnumerable<BrandDTO>>(brands)).Returns(expectedBrandDTOs);
 
         // Act
-        var result = _service.GetBrands(2, 1);
+        var result = _service.GetBrands(2, 1).ToList();
 
         // Assert
-        Assert.Equal(brandDTOs, result);
+        for (int i = 0; i < expectedBrandDTOs.Count; i++)
+        {
+            Assert.Equal(expectedBrandDTOs[i].BrandId, result[i].BrandId);
+            Assert.Equal(expectedBrandDTOs[i].BrandName, result[i].BrandName);
+            Assert.Equal(expectedBrandDTOs[i].ProductId, result[i].ProductId);
+        }
         _mockRepo.Verify(repo => repo.GetBrands(2, 1), Times.Once);
         _mapper.Verify(m => m.Map<IEnumerable<BrandDTO>>(brands), Times.Once);
     }
@@ -95,21 +100,27 @@ public class BrandServiceShould
             new Brand { BrandId = 3, BrandName = "Brand3", ProductId = 1 },
         };
         var pagedBrands = brands.Skip((page - 1) * itemsPerPage).Take(itemsPerPage).ToList();
-        var brandDTOs = pagedBrands.Select(b => new BrandDTO
+        var expectedBrandDTOs = pagedBrands.Select(b => new BrandDTO
         {
             BrandId = b.BrandId,
             BrandName = b.BrandName,
             ProductId = b.ProductId
-        });
+        }).ToList();
 
         _mockRepo.Setup(repo => repo.GetBrands(itemsPerPage, page)).Returns(pagedBrands);
-        _mapper.Setup(m => m.Map<IEnumerable<BrandDTO>>(pagedBrands)).Returns(brandDTOs);
+        _mapper.Setup(m => m.Map<IEnumerable<BrandDTO>>(pagedBrands)).Returns(expectedBrandDTOs);
 
         // Act
-        var result = _service.GetBrands(itemsPerPage, page);
+        var result = _service.GetBrands(itemsPerPage, page).ToList();
 
         // Assert
-        Assert.Equal(brandDTOs, result);
+        for(var i = 0; i < expectedBrandDTOs.Count; i++)
+        {
+            Assert.Equal(expectedBrandDTOs[i].BrandId, result[i].BrandId);
+            Assert.Equal(expectedBrandDTOs[i].BrandName, result[i].BrandName);
+            Assert.Equal(expectedBrandDTOs[i].ProductId, result[i].ProductId);
+        }
+        Assert.Equal(expectedBrandDTOs, result);
         Assert.Equal(itemsPerPage, result.Count());
         _mockRepo.Verify(repo => repo.GetBrands(itemsPerPage, page), Times.Once);
         _mapper.Verify(m => m.Map<IEnumerable<BrandDTO>>(pagedBrands), Times.Once);
