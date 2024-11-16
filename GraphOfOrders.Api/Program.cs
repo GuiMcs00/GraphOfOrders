@@ -1,3 +1,4 @@
+using GraphOfOrders.Api.IoC;
 using GraphOfOrders.Repo.IoC;
 using GraphOfOrders.Service.IoC;
 using GraphOfOrders.Service;
@@ -9,6 +10,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 // Add services to the container.
 builder.Services.AddRepoServices(builder.Configuration);
 builder.Services.AddBusinessServices();
+builder.Services.AddValidatorServices();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -36,4 +38,6 @@ app.MapControllers();
 app.Run();
 
 // Make the implicit Program class public so test projects can access it
-public partial class Program { }
+public partial class Program
+{
+}
