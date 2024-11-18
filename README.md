@@ -71,18 +71,28 @@ docker run --name database -e POSTGRES_USER=user -e POSTGRES_PASSWORD=changeme -
 
 ### Creating migrations
 
+```bash
 dotnet ef migrations add CustomerAdded --project GraphOfOrders.Repo -s GraphOfOrders.Api --context OrdersContext --verbose
+```
 
 ### running migrations
 
+```
 dotnet ef database update MigrationName -p GraphOfOrders.Repo -s GraphOfOrders.Api -c OrdersContext --verbose
+
+```
 
 #### To remove remember to update the database with the last migration
 
+```
 dotnet ef migrations remove -p GraphOfOrders.Repo -s GraphOfOrders.Api -c OrdersContext --verbose
+```
 
 ## Implementing new features
 
 ### Add new packages to projects
 
+```
 dotnet add GraphOfOrders.Service/GraphOfOrders.Service.csproj package Microsoft.Extensions.DependencyInjection
+```
+

@@ -1,11 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using GraphOfOrders.Api.IoC;
+using GraphOfOrders.Repo;
 using GraphOfOrders.Repo.IoC;
 using GraphOfOrders.Service.IoC;
 using GraphOfOrders.Service;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
+// Add DbContext 
+builder.Services.AddDbContext<AccountingContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<OrdersContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddRepoServices(builder.Configuration);

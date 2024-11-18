@@ -11,7 +11,7 @@ namespace GraphOfOrders.Repo
         public DbSet<Order> Orders { get; set; }
         public DbSet<Customer> Customers { get; set;}
 
-        public OrdersContext(DbContextOptions options) : base(options) { }
+        public OrdersContext(DbContextOptions<OrdersContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
