@@ -1,14 +1,14 @@
 using System;
+using GraphOfOrders.Lib.Entities.Tenant;
 using GraphOfOrders.Lib.Enums;
 
 namespace GraphOfOrders.Lib.Entities;
 
-public class ProcessAction
+public record ProcessAction(string TenantId) : TenantItemBase(TenantId), IEmployeeBound
 {
-    public int Id { get; set; }
-    public int ProcessActionTypeId { get; set; } // Foreing Key
-    public int CustomerCompanyId { get; set; } // Foreing Key
-    public int EmployeeId { get; set; } // Foreing Key
+    public string EmployeeId { get; set; }
+    public string ProcessActionTypeId { get; set; } // Foreing Key
+    public string CustomerCompanyId { get; set; } // Foreing Key
     public DateTime CompetencyDate { get; set; }
     public ProcessActionRecurrence Recurrence { get; set; }
     

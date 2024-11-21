@@ -5,8 +5,8 @@ namespace GraphOfOrders.Lib.Enums;
 /// </summary>
 public enum ProcessActionRecurrence
 {
-    Monthly = 0,
-    Annual = 1,
-    OnDemand = 2
+    Monthly,
+    Annual,
+    OnDemand
     
 }

@@ -5,16 +5,16 @@ namespace GraphOfOrders.Lib.Enums;
 /// </summary>
 public enum PeopleProcessTypes
 {
-    ProcessamentoDeAdmissoes = 0,
-    GestaoDeFerias = 1,
-    ControleDePonto = 2,
-    GestaoDeAtestadosMedicosECAT = 3,
-    ProcessamentoDeRescisoes = 5,
-    ProcessamentoDaFolhaDePagamento = 8,
-    EnvioDeObrigacoesAcessorias = 13,
-    RealizacaoDeCalculosEProvisoes = 31,
-    GestaoDeBeneficios = 43,
-    CadastroDeEmpresasNovas = 54,
-    AcompanhamentoDaLegislacaoTrabalhista = 97,
-    ControleEEmissaoDeGuiasTrabalhistas = 151,
+    ProcessamentoDeAdmissoes,
+    GestaoDeFerias,
+    ControleDePonto,
+    GestaoDeAtestadosMedicosECAT,
+    ProcessamentoDeRescisoes,
+    ProcessamentoDaFolhaDePagamento,
+    EnvioDeObrigacoesAcessorias,
+    RealizacaoDeCalculosEProvisoes,
+    GestaoDeBeneficios,
+    CadastroDeEmpresasNovas,
+    AcompanhamentoDaLegislacaoTrabalhista,
+    ControleEEmissaoDeGuiasTrabalhistas,
 }

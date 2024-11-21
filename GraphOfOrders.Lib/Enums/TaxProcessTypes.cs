@@ -5,9 +5,9 @@ namespace GraphOfOrders.Lib.Enums;
 /// </summary>
 public enum TaxProcessTypes
 {
-    ApuracaoDeImpostos = 0,
-    EmissaoDeDeclaracoes = 1,
-    EnvioDeGuias = 2,
-    GestaoDeDocumentosFiscaisEletronicos = 3,
-    SolicitacaoDeDistribuicaoDeLucros = 5,
+    ApuracaoDeImpostos,
+    EmissaoDeDeclaracoes,
+    EnvioDeGuias,
+    GestaoDeDocumentosFiscaisEletronicos,
+    SolicitacaoDeDistribuicaoDeLucros,
 }

@@ -8,17 +8,17 @@ public enum CompanySize
     /// <summary>
     /// Microempresa (ME)
     /// </summary>
-    Microempresa = 0,
+    Microempresa,
     
     /// <summary>
     /// Empresa de Pequeno Porte (EPP)
     /// </summary>
-    EmpresaDePequenoPorte = 1,
+    EmpresaDePequenoPorte,
     
     /// <summary>
     /// Empresa de Grande Porte
     /// </summary>
-    EmpresaDeGrandePorte = 2,
+    EmpresaDeGrandePorte,
     
     
 }

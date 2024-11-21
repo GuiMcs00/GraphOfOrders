@@ -1,15 +1,31 @@
 using System;
 using System.Collections.Generic;
+using GraphOfOrders.Lib.Entities.Tenant;
 using GraphOfOrders.Lib.Enums;
 
 namespace GraphOfOrders.Lib.Entities;
 
-public class ProcessActionType
+/// <summary>
+/// Tipo de Processo
+/// </summary>
+/// <param name="TenantId"></param>
+public record ProcessActionType(string TenantId) : TenantItemBase(TenantId), IDepartmentBound
 {
-    public int Id { get; set; }
-    public int DepartmentId { get; set; } // Foreing Key
+    /// <summary>
+    /// Id do Departamento Associado ao Tipo de Processo
+    /// </summary>
+    public string DepartmentId { get; set; } // Foreing Key
+    /// <summary>
+    /// Nome do Tipo de Processo 
+    /// </summary>
     public string Name { get; set; }
+    /// <summary>
+    /// Descrição do Tipo de Processo
+    /// </summary>
     public string Description { get; set; }
+    /// <summary>
+    /// Enum de Tipo de Processo
+    /// </summary>
     public string ActionTypeName { get; set; }
     
 

@@ -7,13 +7,13 @@ public enum TaxRegime
     /// <summary>
     /// Regime Simples Nacional (DAS)
     /// </summary>
-    SimplesNacional = 0,
+    SimplesNacional,
     /// <summary>
     /// Regime Lucro Presumido
     /// </summary>
-    LucroPresumido = 1,
+    LucroPresumido,
     /// <summary>
     /// Regime Lucro Real
     /// </summary>
-    LucroReal = 2
+    LucroReal
 }
