@@ -77,22 +77,42 @@ dotnet ef migrations add CustomerAdded --project GraphOfOrders.Repo -s GraphOfOr
 
 ### running migrations
 
-```
+```bash
 dotnet ef database update MigrationName -p GraphOfOrders.Repo -s GraphOfOrders.Api -c OrdersContext --verbose
-
 ```
 
-#### To remove remember to update the database with the last migration
+#### Deleting migrations scripts
+> [!CAUTION]
+> To remove, remember to update the database with the last valid migration
 
-```
+```bash
 dotnet ef migrations remove -p GraphOfOrders.Repo -s GraphOfOrders.Api -c OrdersContext --verbose
 ```
+
+### Do you want to roll back the migrations applied because you messed up?
+#### First of all. Undo changes to database
+
+- Rolling back last one
+```bash
+dotnet ef database update ValidMigration --project GraphOfOrders.Repo -s GraphOfOrders.Api --context YourContext -v
+```
+- Rolling back every thing to specific db context
+```bash
+dotnet ef database update '0' --project GraphOfOrders.Repo -s GraphOfOrders.Api --context YourContext -v
+```
+#### Removing migration script
+
+- Delete the last created migration script
+```bash
+dotnet ef migrations remove --project GraphOfOrders.Repo -s GraphOfOrders.Api --context AccountingContext -v 
+```
+> Keep running the above command until you reach desired migration script   
 
 ## Implementing new features
 
 ### Add new packages to projects
 
-```
+```bash
 dotnet add GraphOfOrders.Service/GraphOfOrders.Service.csproj package Microsoft.Extensions.DependencyInjection
 ```
 
