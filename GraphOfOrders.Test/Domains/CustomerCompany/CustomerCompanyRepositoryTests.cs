@@ -12,9 +12,9 @@ namespace GraphOfOrders.Test.Domains.CustomerCompany
     {
         public static Lib.Entities.CustomerCompany CustomerPayload()
         {
-            return new Lib.Entities.CustomerCompany
+            return new Lib.Entities.CustomerCompany("Contelb")
             {
-                Id = 1,
+                Id = "1",
                 Name = "Test",
                 Cnpj = "000",
                 StateRegistration = "000",
@@ -48,7 +48,7 @@ namespace GraphOfOrders.Test.Domains.CustomerCompany
         }
         
         [Fact]
-        public async Task ShouldCreateNewCustomerCompany()
+        public async Task Should_Create_New_CustomerCompany()
         {
             // Arrange
             var customer = TestDataFactory.CustomerPayload();
@@ -63,9 +63,9 @@ namespace GraphOfOrders.Test.Domains.CustomerCompany
         }
 
         [Fact]
-        public async Task ShouldReturnCustomerCompany()
+        public async Task Should_Return_CustomerCompany()
         {
-            var companyId = 1;
+            var companyId = "1";
             
             await _repo.AddCustomerCompanyAsync(TestDataFactory.CustomerPayload());
             
@@ -76,7 +76,7 @@ namespace GraphOfOrders.Test.Domains.CustomerCompany
         }
 
         [Fact]
-        public async Task ShouldUpdateCustomerCompany()
+        public async Task Should_Update_CustomerCompany()
         {
             var companyNewTaxRegime = TaxRegime.LucroPresumido;
             var companyNewCompanySize = CompanySize.EmpresaDePequenoPorte;
@@ -101,7 +101,7 @@ namespace GraphOfOrders.Test.Domains.CustomerCompany
         }
 
         [Fact]
-        public async Task ShouldDeleteCustomerCompany()
+        public async Task Should_Delete_CustomerCompany()
         {
             var customerCompany = TestDataFactory.CustomerPayload();
             

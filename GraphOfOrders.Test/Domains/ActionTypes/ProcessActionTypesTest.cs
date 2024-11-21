@@ -10,7 +10,7 @@ public class ProcessActionTypesTest
     public void SetActionType_ShouldStoreCorrectTaxActionType()
     {
         // Arrange
-        var processActionType = new ProcessActionType();
+        var processActionType = new ProcessActionType("Contelb");
         var expectedActionTypeName = TaxProcessTypes.ApuracaoDeImpostos.ToString();
 
         // Act
@@ -24,7 +24,7 @@ public class ProcessActionTypesTest
     public void GetActionType_ShouldReturnCorrectTaxActionType()
     {
         // Arrange
-        var processActionType = new ProcessActionType();
+        var processActionType = new ProcessActionType("Contelb");
         processActionType.SetActionType(TaxProcessTypes.EmissaoDeDeclaracoes);
 
         // Act
@@ -38,7 +38,7 @@ public class ProcessActionTypesTest
     public void SetActionType_ShouldStoreCorrectPeopleActionType()
     {
         // Arrange
-        var processActionType = new ProcessActionType();
+        var processActionType = new ProcessActionType("Contelb");
         var expectedActionTypeName = PeopleProcessTypes.GestaoDeFerias.ToString();
 
         // Act
@@ -52,7 +52,7 @@ public class ProcessActionTypesTest
     public void GetActionType_ShouldReturnCorrectPeopleActionType()
     {
         // Arrange
-        var processActionType = new ProcessActionType();
+        var processActionType = new ProcessActionType("Contelb");
         processActionType.SetActionType(PeopleProcessTypes.GestaoDeFerias);
 
         // Act
@@ -67,7 +67,7 @@ public class ProcessActionTypesTest
     public void GetActionType_WithIncorrectEnum_ShouldThrowException()
     {
         // Arrange
-        var processActionType = new ProcessActionType();
+        var processActionType = new ProcessActionType("Contelb");
         processActionType.SetActionType(TaxProcessTypes.ApuracaoDeImpostos);
 
         // Act & Assert

@@ -8,48 +8,26 @@ public class CustomerCompanyRepository : BaseRepository<CustomerCompany>
     
     public async Task<CustomerCompany> AddCustomerCompanyAsync(CustomerCompany customerCompany)
     {
-        await AddAsync(customerCompany);
-        return customerCompany;
+        var addedEntity = await AddAsync(customerCompany);
+        return addedEntity;
     }
 
-    public async Task<CustomerCompany> GetCustomerCompanyAsync(int customerCompanyId)
+    public async Task<CustomerCompany> GetCustomerCompanyAsync(string customerCompanyId)
     {
         return await GetByIdAsync(customerCompanyId);
     }
 
-    public async Task<CustomerCompany> UpdateCustomerCompanyAsync(int id, CustomerCompany entryEntity)
+    public async Task<CustomerCompany> UpdateCustomerCompanyAsync(string id, CustomerCompany entryEntity)
     {
-        var existingEntity = await GetByIdAsync(id);
-        if (existingEntity == null)
-        {
-            throw new KeyNotFoundException($"CustomerCompany with Id {id} not found.");
-        }
-        
-        
-        existingEntity.Name = entryEntity.Name;
-        existingEntity.Cnpj = entryEntity.Cnpj;
-        existingEntity.StateRegistration = entryEntity.StateRegistration;
-        existingEntity.MunicipalRegistration = entryEntity.MunicipalRegistration;
-        existingEntity.Documents = entryEntity.Documents;
-        existingEntity.CompanyType = entryEntity.CompanyType;
-        existingEntity.TaxRegime = entryEntity.TaxRegime;
-        existingEntity.CompanySize = entryEntity.CompanySize;
-        
+        var updatedEntity = await UpdateAsync(id, entryEntity);
 
-        await _context.SaveChangesAsync();
-        return entryEntity;
+        return updatedEntity;
     }
 
-    public async Task<CustomerCompany> DeleteCustomerCompanyAsync(int customerId)
+    public async Task<CustomerCompany> DeleteCustomerCompanyAsync(string customerId)
     {
-        var existingEntity = await GetByIdAsync(customerId);
-        if (existingEntity == null)
-        {
-            throw new KeyNotFoundException($"CustomerCompany with Id {customerId} not found.");
-        }
-
-        await DeleteAsync(customerId);
+        var deletedEntity = await DeleteAsync(customerId);
         
-        return existingEntity;
+        return deletedEntity;
     }
 }

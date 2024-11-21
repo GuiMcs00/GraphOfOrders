@@ -40,7 +40,7 @@ namespace GraphOfOrders.Repo
             var existingCustomer = await _context.Customers.FindAsync(id);
             if (existingCustomer == null)
             {
-                return null; // or you might want to throw a not found exception
+                throw new NotFoundException($"Entity not found."); // or you might want to throw a not found exception
             }
 
             // Update the properties of the existing customer entity
