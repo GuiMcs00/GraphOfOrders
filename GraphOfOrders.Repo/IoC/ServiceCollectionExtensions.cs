@@ -11,6 +11,8 @@ namespace GraphOfOrders.Repo.IoC
         {
             services.AddDbContext<OrdersContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AccountingContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();

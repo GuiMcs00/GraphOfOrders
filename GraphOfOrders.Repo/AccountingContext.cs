@@ -1,17 +1,19 @@
 using GraphOfOrders.Lib.Entities;
 using GraphOfOrders.Lib.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GraphOfOrders.Repo;
 
 public class AccountingContext : DbContext
 {
-    public DbSet<CustomerCompany> CustomerCompanies { get; set; }
-    public DbSet<Employee> Employees { get; set; }
-    public DbSet<ProcessAction> ProcessActions { get; set; }
-    public DbSet<ProcessActionType> ProcessActionTypes { get; set; }
-    public DbSet<Department> Departments { get; set; }
-    public DbSet<CustomerCompanyEmployee> CustomerCompanyEmployees { get; set; }
+    public DbSet<CustomerCompany> CustomerCompany { get; set; }
+    public DbSet<Employee> Employee { get; set; }
+    public DbSet<ProcessAction> ProcessAction { get; set; }
+    public DbSet<ProcessActionType> ProcessActionType { get; set; }
+    public DbSet<Department> Department { get; set; }
+    public DbSet<CustomerCompanyEmployee> CustomerCompanyEmployee { get; set; }
+    public DbSet<Attachment> Attachment { get; set; }
     
     public AccountingContext(DbContextOptions<AccountingContext> options) : base(options) { }
 
@@ -22,11 +24,20 @@ public class AccountingContext : DbContext
         modelBuilder.Entity<CustomerCompany>(entity =>
         {
             entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            
             entity.Property(e => e.Name).IsRequired();
+            
             entity.Property(e => e.Cnpj).IsRequired();
+            
             entity.Property(e => e.StateRegistration).IsRequired();
+            
             entity.Property(e => e.MunicipalRegistration).IsRequired();
-            entity.Property(e => e.Documents);
+            
+            entity.HasMany(cc => cc.Documents)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade); 
             
             entity.Property(e => e.TaxRegime)
                 .HasConversion<int>()
@@ -43,11 +54,18 @@ public class AccountingContext : DbContext
             entity.HasMany(cc => cc.ProcessActions)
                 .WithOne(pa => pa.CustomerCompany)
                 .HasForeignKey(pa => pa.CustomerCompanyId);
+            
+            entity.HasMany(cc => cc.CustomerCompanyEmployees)
+                .WithOne(cce => cce.CustomerCompany)
+                .HasForeignKey(cce => cce.CustomerCompanyId);
         });
 
         modelBuilder.Entity<ProcessAction>(entity =>
         {
             entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            
             entity.Property(e => e.CompetencyDate).IsRequired();
             
             entity.Property(e => e.Recurrence)
@@ -70,7 +88,11 @@ public class AccountingContext : DbContext
         modelBuilder.Entity<ProcessActionType>(entity =>
         {
             entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            
             entity.Property(e => e.Name).IsRequired();
+            
             entity.Property(e => e.Description).IsRequired();
             
             entity.HasOne(e => e.Department)
@@ -86,7 +108,20 @@ public class AccountingContext : DbContext
         modelBuilder.Entity<Employee>(entity =>
         {
             entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            
             entity.Property(e => e.Name).IsRequired();
+            
+            var rolesConverter = new ValueConverter<IEnumerable<Roles>, string>(
+                roles => string.Join(",", roles.Select(r => r.ToString())),
+                roles => roles.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(r => Enum.Parse<Roles>(r))
+                    .ToList());
+            
+            entity.Property(e => e.Role)
+                .HasConversion(rolesConverter)
+                .IsRequired();
             
             entity.HasOne(e => e.Department)
                 .WithMany(d => d.Employees)
@@ -95,6 +130,10 @@ public class AccountingContext : DbContext
             entity.HasMany(e => e.ProcessActions)
                 .WithOne(pa => pa.Employee)
                 .HasForeignKey(pa => pa.EmployeeId);
+            
+            entity.HasMany(e => e.CustomerCompanyEmployees)
+                .WithOne(cce => cce.Employee)
+                .HasForeignKey(cce => cce.EmployeeId);
         });
         
         modelBuilder.Entity<Department>(entity =>
@@ -128,20 +167,36 @@ public class AccountingContext : DbContext
                 .WithMany(c => c.CustomerCompanyEmployees)
                 .HasForeignKey(ce => ce.CustomerCompanyId);
 
-            /// entity.Property(ce => ce.Role).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<Attachment>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Id)
+                .IsRequired()
+                .HasMaxLength(36);
+
+            entity.Property(e => e.FileName)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.Property(e => e.Data)
+                .IsRequired();
+
+            entity.Property(e => e.ContentType)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.Type)
+                .IsRequired()
+                .HasConversion<int>();
+
+            // Optionally, configure any index
+            entity.HasIndex(e => e.FileName);
         });
     }
     
-    private static object ConvertToSpecificActionType(string actionTypeName, int departmentId)
-    {
-        return departmentId switch
-        {
-            1 => Enum.Parse(typeof(AccountingProcessTypes), actionTypeName),
-            2 => Enum.Parse(typeof(PeopleProcessTypes), actionTypeName),
-            3 => Enum.Parse(typeof(LegalProcessTypes), actionTypeName),
-            4 => Enum.Parse(typeof(TaxProcessTypes), actionTypeName),
-
-            _ => throw new ArgumentException("Tipo de departamento inválido.")
-        };
-    }
 }
