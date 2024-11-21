@@ -11,12 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
-// Add DbContext 
-builder.Services.AddDbContext<AccountingContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddDbContext<OrdersContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 // Add services to the container.
 builder.Services.AddRepoServices(builder.Configuration);
 builder.Services.AddBusinessServices();
@@ -48,6 +42,4 @@ app.MapControllers();
 app.Run();
 
 // Make the implicit Program class public so test projects can access it
-public partial class Program
-{
-}
+public partial class Program { }
